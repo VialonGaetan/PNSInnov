@@ -9,15 +9,17 @@ import java.io.Serializable;
 public class Student implements Serializable
 {
     private final String name;
+    private final String mail;
 
-    protected Student()
+    public Student()
     {
-        this("");
+        this("", "");
     }
 
-    public Student(String name)
+    public Student(String name, String mail)
     {
         this.name = name;
+        this.mail = mail;
     }
 
     @Override

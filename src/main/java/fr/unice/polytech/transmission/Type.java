@@ -1,4 +1,4 @@
-package fr.unice.polytech.transmission.requests;
+package fr.unice.polytech.transmission;
 
 /**
  * @author Alexandre Clement
@@ -6,5 +6,5 @@ package fr.unice.polytech.transmission.requests;
  */
 public enum Type
 {
-    JOIN, CREATE
+    JOIN, ADD, PARTICIPANT_LIST, IDEA_LIST
 }

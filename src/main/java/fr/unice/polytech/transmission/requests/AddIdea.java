@@ -1,23 +1,29 @@
 package fr.unice.polytech.transmission.requests;
 
 import fr.unice.polytech.Idea;
+import fr.unice.polytech.transmission.Type;
 
 /**
  * @author Alexandre Clement
  *         Created the 02/05/2017.
  */
-public class CreateIdea implements Request
+public class AddIdea implements Request
 {
     private final Idea idea;
 
-    public CreateIdea(Idea idea)
+    public AddIdea()
+    {
+        this(new Idea());
+    }
+
+    public AddIdea(Idea idea)
     {
         this.idea = idea;
     }
 
     public Type getType()
     {
-        return Type.CREATE;
+        return Type.ADD;
     }
 
     public Idea getIdea()
@@ -33,7 +39,7 @@ public class CreateIdea implements Request
         if (o == null || getClass() != o.getClass())
             return false;
 
-        CreateIdea that = (CreateIdea) o;
+        AddIdea that = (AddIdea) o;
 
         return idea.equals(that.idea);
     }
@@ -47,6 +53,6 @@ public class CreateIdea implements Request
     @Override
     public String toString()
     {
-        return String.format("CreateIdea(%s)", idea);
+        return String.format("AddIdea(%s)", idea);
     }
 }

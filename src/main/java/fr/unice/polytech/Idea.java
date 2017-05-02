@@ -14,7 +14,7 @@ public class Idea implements Serializable
     private final List<Techno> technos;
     private final Student author;
 
-    protected Idea()
+    public Idea()
     {
         this("", new ArrayList<Techno>(), new Student());
     }

@@ -2,6 +2,7 @@ package fr.unice.polytech.transmission.requests;
 
 import fr.unice.polytech.Idea;
 import fr.unice.polytech.Student;
+import fr.unice.polytech.transmission.Type;
 
 /**
  * @author Alexandre Clement
@@ -11,6 +12,11 @@ public class JoinIdea implements Request
 {
     private final Student student;
     private final Idea idea;
+
+    public JoinIdea()
+    {
+        this(new Student(), new Idea());
+    }
 
     public JoinIdea(Student student, Idea idea)
     {

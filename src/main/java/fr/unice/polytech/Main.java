@@ -1,12 +1,10 @@
 package fr.unice.polytech;
 
-import fr.unice.polytech.transmission.requests.CreateIdea;
+import fr.unice.polytech.transmission.requests.AddIdea;
 import fr.unice.polytech.transmission.requests.Request;
-import fr.unice.polytech.transmission.requests.Type;
 
 import java.io.*;
 import java.util.Arrays;
-import java.util.Collections;
 
 /**
  * @author Alexandre Clement
@@ -21,9 +19,9 @@ public class Main
 
     public static void main(String[] args) throws IOException, ClassNotFoundException
     {
-        Student author = new Student("Morris");
+        Student author = new Student("Morris", "Jean.Morris@mail.fr");
         Idea idea = new Idea("Tu pousses le bouchon un peu trop loin.", Arrays.asList(Techno.JAVA, Techno.PYTHON), author);
-        Request sent_request = new CreateIdea(idea);
+        Request sent_request = new AddIdea(idea);
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(256);
 
