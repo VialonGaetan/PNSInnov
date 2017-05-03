@@ -24,4 +24,9 @@ public class JoinIdeaResult implements Answer
     {
         return Type.JOIN;
     }
+
+    public RespondingCode getRespondingCode()
+    {
+        return respondingCode;
+    }
 }

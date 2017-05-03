@@ -24,4 +24,9 @@ public class AddIdeaResult implements Answer
     {
         return Type.ADD;
     }
+
+    public RespondingCode getRespondingCode()
+    {
+        return respondingCode;
+    }
 }
