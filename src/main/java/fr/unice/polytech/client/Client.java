@@ -3,20 +3,14 @@ package fr.unice.polytech.client;
 import fr.unice.polytech.Idea;
 import fr.unice.polytech.Student;
 import fr.unice.polytech.Techno;
-import fr.unice.polytech.transmission.answers.AddIdeaResult;
-import fr.unice.polytech.transmission.answers.Answer;
 import fr.unice.polytech.transmission.answers.JoinIdeaResult;
-import fr.unice.polytech.transmission.requests.AddIdea;
-import fr.unice.polytech.transmission.requests.JoinIdea;
+import fr.unice.polytech.transmission.requests.*;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
-import java.util.logging.Logger;
-import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * @author Alexandre Clement
@@ -24,12 +18,16 @@ import java.util.regex.Pattern;
  */
 public class Client implements Runnable
 {
+    private static final String HELP = String.format("Available command : %s",
+            Arrays.stream(Argument.values()).map(Enum::toString).collect(Collectors.joining("\", \"", "\"", "\"")));
     private final Socket socket;
     private final ObjectOutputStream out;
     private final ObjectInputStream in;
+    private final Argument argument;
 
-    public Client(String host, int port) throws IOException
+    Client(String host, int port, Argument argument) throws IOException
     {
+        this.argument = argument;
         socket = new Socket(host, port);
         out = new ObjectOutputStream(new PrintStream(socket.getOutputStream()));
         in = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
@@ -37,14 +35,15 @@ public class Client implements Runnable
 
     public void run()
     {
+        Student bob = new Student("Bob", "Bob@eponge.sea");
+        Student patrick = new Student("Patrick", "patrick@star.sea");
+        Idea idea = new Idea("Ah que coucou Patrick", Arrays.asList(Techno.JAVA, Techno.PYTHON), bob);
+
+        Request[] requests = {new AddIdea(idea), new JoinIdea(patrick, idea), new ListParticipant(idea), new ListIdea()};
+
         try
         {
-            Student bob = new Student("Bob", "Bob@eponge.sea");
-            Student patrick = new Student("Patrick", "patrick@star.sea");
-            Idea idea = new Idea("Ah que coucou Patrick", Arrays.asList(Techno.JAVA, Techno.PYTHON), bob);
-
-            // out.writeObject(new JoinIdea(patrick, idea));
-            out.writeObject(new AddIdea(idea));
+            out.writeObject(requests[argument.ordinal()]);
 
             System.out.println(((JoinIdeaResult) in.readObject()).getRespondingCode().getCode());
 
@@ -58,8 +57,22 @@ public class Client implements Runnable
 
     public static void main(String[] args) throws IOException
     {
-        Client client = new Client(null, 15555);
-        new Thread(client).start();
+        System.out.println(HELP);
+        Scanner scanner = new Scanner(System.in);
+        Argument argument;
+        while (scanner.hasNextLine())
+        {
+            try
+            {
+                argument = Argument.valueOf(scanner.nextLine());
+            }
+            catch (IllegalArgumentException exception)
+            {
+                break;
+            }
+            Client client = new Client(null, 15555, argument);
+            new Thread(client).start();
+        }
     }
 
     private enum Argument
