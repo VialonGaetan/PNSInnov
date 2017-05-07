@@ -35,6 +35,8 @@ class RequestThread implements Runnable
             out.writeObject(request);
             Object object = in.readObject();
             LOGGER.log(Level.INFO, () -> String.format("received object : %s", object.toString()));
+            in.close();
+            out.close();
             socket.close();
         }
         catch (IOException | ClassNotFoundException exception)
