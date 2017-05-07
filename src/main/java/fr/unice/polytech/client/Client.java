@@ -1,82 +1,35 @@
 package fr.unice.polytech.client;
 
-import fr.unice.polytech.Idea;
-import fr.unice.polytech.Student;
-import fr.unice.polytech.Techno;
-import fr.unice.polytech.transmission.answers.JoinIdeaResult;
-import fr.unice.polytech.transmission.requests.*;
+import fr.unice.polytech.client.builder.request.*;
 
-import java.io.*;
+import java.io.IOException;
 import java.net.Socket;
-import java.util.Arrays;
-import java.util.Scanner;
-import java.util.stream.Collectors;
+import java.util.regex.Matcher;
 
 /**
  * @author Alexandre Clement
  *         Created the 02/05/2017.
  */
-public class Client implements Runnable
+class Client
 {
-    private static final String HELP = String.format("Available command : %s",
-            Arrays.stream(Argument.values()).map(Enum::toString).collect(Collectors.joining("\", \"", "\"", "\"")));
-    private final Socket socket;
-    private final ObjectOutputStream out;
-    private final ObjectInputStream in;
-    private final Argument argument;
+    private static final RequestBuilder[] builders = {new AddIdeaBuilder(), new JoinIdeaBuilder(), new ListParticipantBuilder(), new ListIdeaBuilder()};
+    private final String host;
+    private final int port;
 
-    Client(String host, int port, Argument argument) throws IOException
+    Client(String host, int port) throws IOException
     {
-        this.argument = argument;
-        socket = new Socket(host, port);
-        out = new ObjectOutputStream(new PrintStream(socket.getOutputStream()));
-        in = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
+        this.host = host;
+        this.port = port;
     }
 
-    public void run()
+    Runnable sendRequest(String request) throws InvalidRequest, IOException
     {
-        Student bob = new Student("Bob", "Bob@eponge.sea");
-        Student patrick = new Student("Patrick", "patrick@star.sea");
-        Idea idea = new Idea("Ah que coucou Patrick", Arrays.asList(Techno.JAVA, Techno.PYTHON), bob);
-
-        Request[] requests = {new AddIdea(idea), new JoinIdea(patrick, idea), new ListParticipant(idea), new ListIdea()};
-
-        try
+        for (Argument arg : Argument.values())
         {
-            out.writeObject(requests[argument.ordinal()]);
-
-            System.out.println(((JoinIdeaResult) in.readObject()).getRespondingCode().getCode());
-
-            socket.close();
+            Matcher matcher = arg.getPattern().matcher(request);
+            if (matcher.matches())
+                return new RequestThread(builders[arg.ordinal()].build(matcher), new Socket(host, port));
         }
-        catch (IOException | ClassNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-    }
-
-    public static void main(String[] args) throws IOException
-    {
-        System.out.println(HELP);
-        Scanner scanner = new Scanner(System.in);
-        Argument argument;
-        while (scanner.hasNextLine())
-        {
-            try
-            {
-                argument = Argument.valueOf(scanner.nextLine());
-            }
-            catch (IllegalArgumentException exception)
-            {
-                break;
-            }
-            Client client = new Client(null, 15555, argument);
-            new Thread(client).start();
-        }
-    }
-
-    private enum Argument
-    {
-        ADD, JOIN, PART, IDEA
+        throw new InvalidRequest();
     }
 }

@@ -44,6 +44,6 @@ public class Student implements Serializable
     @Override
     public String toString()
     {
-        return String.format("Student[\"%s\"]", name);
+        return String.format("Student[\"%s\", \"%s\"]", name, mail);
     }
 }

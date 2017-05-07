@@ -59,4 +59,10 @@ public class JoinIdea implements Request
         result = 31 * result + idea.hashCode();
         return result;
     }
+
+    @Override
+    public String toString()
+    {
+        return String.format("JoinIdea(%s joinded %s)", student, idea);
+    }
 }
