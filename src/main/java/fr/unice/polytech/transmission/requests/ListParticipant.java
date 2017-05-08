@@ -16,6 +16,10 @@ public class ListParticipant implements Request
         this(new Idea());
     }
 
+    /**
+     * Requete afin de recuperer la liste des participants d'une idée
+     * @param idea dont on veut savoir les participants
+     */
     public ListParticipant(Idea idea)
     {
         this.idea = idea;

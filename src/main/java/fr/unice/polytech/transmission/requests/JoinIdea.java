@@ -18,6 +18,12 @@ public class JoinIdea implements Request
         this(new Student(), new Idea());
     }
 
+
+    /**
+     * Requete afin de rejoindre une idée
+     * @param student etudiant qui veut rejoindre une idée
+     * @param idea idée que celui-ci veut rejoindre
+     */
     public JoinIdea(Student student, Idea idea)
     {
         this.student = student;

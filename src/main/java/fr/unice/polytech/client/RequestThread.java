@@ -1,5 +1,6 @@
 package fr.unice.polytech.client;
 
+import fr.unice.polytech.transmission.answers.Answer;
 import fr.unice.polytech.transmission.requests.Request;
 
 import java.io.*;
@@ -34,7 +35,9 @@ class RequestThread implements Runnable
             LOGGER.log(Level.INFO, () -> String.format("sent request : %s", request.toString()));
             out.writeObject(request);
             Object object = in.readObject();
+            Answer answer = (Answer) object;
             LOGGER.log(Level.INFO, () -> String.format("received object : %s", object.toString()));
+            System.out.println(answer.getRespondingCode().getCode());
             in.close();
             out.close();
             socket.close();

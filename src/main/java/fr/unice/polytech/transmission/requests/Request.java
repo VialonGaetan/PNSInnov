@@ -1,9 +1,6 @@
 package fr.unice.polytech.transmission.requests;
 
 import fr.unice.polytech.transmission.Transmission;
-import fr.unice.polytech.transmission.Type;
-
-import java.io.Serializable;
 
 /**
  * @author Alexandre Clement

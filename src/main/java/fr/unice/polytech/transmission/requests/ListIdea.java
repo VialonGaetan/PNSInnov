@@ -8,6 +8,12 @@ import fr.unice.polytech.transmission.Type;
  */
 public class ListIdea implements Request
 {
+    /**
+     * Requete pour avoir la liste des idées
+     */
+    public ListIdea() {
+    }
+
     public Type getType()
     {
         return Type.IDEA_LIST;

@@ -15,6 +15,10 @@ public class JoinIdeaResult implements Answer
         this(new RespondingCode());
     }
 
+    /**
+     * Reponse à la requete JoinIdea
+     * @param respondingCode 0 si tout va bien
+     */
     public JoinIdeaResult(RespondingCode respondingCode)
     {
         this.respondingCode = respondingCode;
@@ -25,6 +29,7 @@ public class JoinIdeaResult implements Answer
         return Type.JOIN;
     }
 
+    @Override
     public RespondingCode getRespondingCode()
     {
         return respondingCode;

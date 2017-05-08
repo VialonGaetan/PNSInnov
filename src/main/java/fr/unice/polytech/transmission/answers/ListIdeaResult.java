@@ -3,7 +3,6 @@ package fr.unice.polytech.transmission.answers;
 import fr.unice.polytech.Idea;
 import fr.unice.polytech.transmission.Type;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,6 +20,11 @@ public class ListIdeaResult implements Answer
         this(new RespondingCode(), new HashSet<Idea>());
     }
 
+    /**
+     * Reponse à la requete ListIdea
+     * @param respondingCode 0 si tout va bien
+     * @param ideas Ensemble de toutes les idées
+     */
     public ListIdeaResult(RespondingCode respondingCode, Set<Idea> ideas)
     {
         this.respondingCode = respondingCode;
@@ -30,5 +34,10 @@ public class ListIdeaResult implements Answer
     public Type getType()
     {
         return Type.IDEA_LIST;
+    }
+
+    @Override
+    public RespondingCode getRespondingCode() {
+        return respondingCode;
     }
 }

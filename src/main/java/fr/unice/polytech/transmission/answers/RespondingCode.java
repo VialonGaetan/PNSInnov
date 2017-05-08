@@ -15,6 +15,10 @@ public class RespondingCode implements Serializable
         this(0);
     }
 
+    /**
+     * Code permettant de definir si une requete s'est bien passée
+     * @param code code de retour
+     */
     public RespondingCode(int code)
     {
         this.code = code;

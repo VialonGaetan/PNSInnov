@@ -20,6 +20,11 @@ public class ListParticipantResult implements Answer
         this(new RespondingCode(), new ArrayList<Student>());
     }
 
+    /**
+     * Reponse à la requete ListParticipant
+     * @param respondingCode 0 si tout va bien
+     * @param participants Liste des participants
+     */
     public ListParticipantResult(RespondingCode respondingCode, List<Student> participants)
     {
         this.respondingCode = respondingCode;
@@ -34,5 +39,10 @@ public class ListParticipantResult implements Answer
     public List<Student> getParticipants()
     {
         return participants;
+    }
+
+    @Override
+    public RespondingCode getRespondingCode() {
+        return respondingCode;
     }
 }

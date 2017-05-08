@@ -9,7 +9,7 @@ import java.util.List;
  */
 public enum Techno
 {
-    JAVA, PYTHON;
+    JAVA, PYTHON, PHP, JS, C, HTML;
 
     public static List<Techno> valuesOf(String string)
     {

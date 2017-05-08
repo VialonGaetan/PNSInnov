@@ -15,6 +15,10 @@ public class AddIdeaResult implements Answer
         this(new RespondingCode());
     }
 
+    /**
+     * Reponse à la requete d'ajout d'une idée
+     * @param respondingCode 0 si tout va bien
+     */
     public AddIdeaResult(RespondingCode respondingCode)
     {
         this.respondingCode = respondingCode;
@@ -25,6 +29,7 @@ public class AddIdeaResult implements Answer
         return Type.ADD;
     }
 
+    @Override
     public RespondingCode getRespondingCode()
     {
         return respondingCode;

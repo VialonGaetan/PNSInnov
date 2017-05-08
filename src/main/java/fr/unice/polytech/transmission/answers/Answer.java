@@ -1,7 +1,6 @@
 package fr.unice.polytech.transmission.answers;
 
 import fr.unice.polytech.transmission.Transmission;
-import fr.unice.polytech.transmission.Type;
 
 /**
  * @author Alexandre Clement
@@ -9,5 +8,5 @@ import fr.unice.polytech.transmission.Type;
  */
 public interface Answer extends Transmission
 {
-
+    RespondingCode getRespondingCode();
 }

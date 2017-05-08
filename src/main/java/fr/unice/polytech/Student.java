@@ -16,6 +16,11 @@ public class Student implements Serializable
         this("", "");
     }
 
+    /**
+     * Un etudiant est defini par son nom et par son mail
+     * @param name nom de l'etudiant
+     * @param mail mail de l'etudiant
+     */
     public Student(String name, String mail)
     {
         this.name = name;
@@ -32,7 +37,7 @@ public class Student implements Serializable
 
         Student student = (Student) o;
 
-        return name.equals(student.name);
+        return name.equals(student.name) && mail.equals(student.mail);
     }
 
     @Override

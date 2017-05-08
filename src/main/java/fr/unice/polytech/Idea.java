@@ -19,11 +19,22 @@ public class Idea implements Serializable
         this("", new ArrayList<Techno>(), new Student());
     }
 
+    /**
+     * Creation d'une idée pour le projet PNSInnov
+     * Celle-ci est composé d'une description, des technos utilisés et d'un createur
+     * @param description
+     * @param technos
+     * @param author
+     */
     public Idea(String description, List<Techno> technos, Student author)
     {
         this.description = description;
         this.technos = technos;
         this.author = author;
+    }
+
+    public Student getAuthor() {
+        return author;
     }
 
     @Override

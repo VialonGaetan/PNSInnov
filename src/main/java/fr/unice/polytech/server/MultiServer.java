@@ -1,5 +1,7 @@
 package fr.unice.polytech.server;
 
+import fr.unice.polytech.Project;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 
@@ -11,6 +13,7 @@ public class MultiServer {
 
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = null;
+        Project project = new Project();
         boolean listening = true;
         try {
             serverSocket = new ServerSocket(15555);
@@ -19,7 +22,7 @@ public class MultiServer {
             System.exit(-1);
         }
         while (listening)
-            new MyServerThread(serverSocket.accept()).start();
+            new MyServerThread(serverSocket.accept(), project).start();
         serverSocket.close();
     }
 }

@@ -16,6 +16,10 @@ public class AddIdea implements Request
         this(new Idea());
     }
 
+    /**
+     * Requete permettant d'ajouter d'une idée
+     * @param idea : idée que l'on veut ajouter
+     */
     public AddIdea(Idea idea)
     {
         this.idea = idea;
