@@ -33,7 +33,7 @@ public class ListParticipantResult implements Answer
 
     public Type getType()
     {
-        return Type.PARTICIPANT_LIST;
+        return Type.PARTICIPANT_LIST_ANSWER;
     }
 
     public List<Student> getParticipants()

@@ -26,7 +26,7 @@ public class JoinIdeaResult implements Answer
 
     public Type getType()
     {
-        return Type.JOIN;
+        return Type.JOIN_ANSWER;
     }
 
     @Override

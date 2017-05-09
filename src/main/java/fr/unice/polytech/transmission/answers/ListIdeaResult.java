@@ -33,7 +33,7 @@ public class ListIdeaResult implements Answer
 
     public Type getType()
     {
-        return Type.IDEA_LIST;
+        return Type.IDEA_LIST_ANSWER;
     }
 
     @Override
