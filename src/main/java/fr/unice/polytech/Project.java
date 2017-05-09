@@ -28,7 +28,8 @@ public class Project
     }
 
     public void addIdea(Idea idea){
-        projects.putIfAbsent(idea,Arrays.asList(idea.getAuthor()));
+        projects.putIfAbsent(idea,new ArrayList<>());
+        addStudentToAProject(idea, idea.getAuthor());
     }
 
     public void addStudentToAProject(Idea idea, Student student){

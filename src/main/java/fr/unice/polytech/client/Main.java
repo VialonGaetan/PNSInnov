@@ -24,7 +24,7 @@ public class Main
     {
         System.out.println(HELP);
         Scanner scanner = new Scanner(System.in);
-        Client client = new Client(null, 15555);
+        Client client = new Client("10.212.127.229", 15555);
 
         try
         {

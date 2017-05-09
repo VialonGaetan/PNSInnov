@@ -34,4 +34,10 @@ public class JoinIdeaResult implements Answer
     {
         return respondingCode;
     }
+
+    @Override
+    public String toString()
+    {
+        return String.format("Join Idea code : %d", respondingCode.getCode());
+    }
 }

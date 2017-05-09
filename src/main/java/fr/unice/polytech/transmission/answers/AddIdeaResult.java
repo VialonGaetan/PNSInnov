@@ -34,4 +34,10 @@ public class AddIdeaResult implements Answer
     {
         return respondingCode;
     }
+
+    @Override
+    public String toString()
+    {
+        return String.format("Add Idea code : %d", respondingCode.getCode());
+    }
 }

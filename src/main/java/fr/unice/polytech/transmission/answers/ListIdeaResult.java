@@ -40,4 +40,10 @@ public class ListIdeaResult implements Answer
     public RespondingCode getRespondingCode() {
         return respondingCode;
     }
+
+    @Override
+    public String toString()
+    {
+        return String.format("List Idea code : %d%n\t%s", respondingCode.getCode(), ideas);
+    }
 }

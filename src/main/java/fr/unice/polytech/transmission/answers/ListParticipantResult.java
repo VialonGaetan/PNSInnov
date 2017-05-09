@@ -45,4 +45,10 @@ public class ListParticipantResult implements Answer
     public RespondingCode getRespondingCode() {
         return respondingCode;
     }
+
+    @Override
+    public String toString()
+    {
+        return String.format("List Participant code : %d%n\t%s", respondingCode.getCode(), participants);
+    }
 }
