@@ -26,7 +26,7 @@ public class AddIdeaResult implements Answer
 
     public Type getType()
     {
-        return Type.ADD_ANSWER;
+        return Type.ADD;
     }
 
     @Override
