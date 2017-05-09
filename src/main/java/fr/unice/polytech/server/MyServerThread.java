@@ -1,6 +1,7 @@
 package fr.unice.polytech.server;
 
 import fr.unice.polytech.Project;
+import fr.unice.polytech.server.Builder.*;
 import fr.unice.polytech.transmission.answers.*;
 import fr.unice.polytech.transmission.requests.AddIdea;
 import fr.unice.polytech.transmission.requests.JoinIdea;
@@ -24,6 +25,7 @@ public class MyServerThread extends Thread {
     private Socket socket;
     private Project project;
     private static final Logger LOGGER = Logger.getLogger(MultiServer.class.getName());
+    private static final AnswerBuilder[] builders = {new JoinIdeaResult_Builder(), new AddIdeaResult_Builder(), new ListParticipantResult_Builder(), new ListIdeaResult_Builder()};
 
     public MyServerThread(Socket socket, Project project) {
         super("MyServerThread");
@@ -40,56 +42,13 @@ public class MyServerThread extends Thread {
             ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
             ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
 
-            Request object = (Request) in.readObject();
+            Object object = in.readObject();
             LOGGER.log(Level.INFO, () -> String.format("new client by port : %s", socket.getPort()));
-            LOGGER.log(Level.INFO, () -> String.format("Type Request : %s", object.getType()));
 
-            switch (object.getType()){
-                case JOIN:
-                    JoinIdea joinIdea = (JoinIdea) object;
-                    if (project.getIdeaSet().isEmpty()){
-                        out.writeObject(new JoinIdeaResult(new RespondingCode(1)));//Il existe aucune idée
-                    }
-                    else if(!project.getIdeaSet().contains(joinIdea.getIdea())){
-                        out.writeObject(new JoinIdeaResult(new RespondingCode(2)));//L'idée n'existe pas
-                    }
-                    else if (project.getStudentListOfAProject(joinIdea.getIdea()).contains(joinIdea.getStudent())){
-                        out.writeObject(new JoinIdeaResult(new RespondingCode(3)));// L'étudiant a deja rejoint le projet
-                    }
-                    else{
-                        project.addStudentToAProject(joinIdea.getIdea(),joinIdea.getStudent());
-                        out.writeObject(new JoinIdeaResult(new RespondingCode(0)));
-                    }
-                    break;
-
-                case ADD:
-                    AddIdea idea = (AddIdea) object;
-                    if ((!project.getIdeaSet().isEmpty()) && project.getIdeaSet().contains(idea.getIdea()))
-                        out.writeObject(new AddIdeaResult(new RespondingCode(1)));//Projet existe déjà
-                    else {
-                        project.addIdea(idea.getIdea());
-                        out.writeObject(new AddIdeaResult(new RespondingCode(0)));
-                    }
-                    break;
-
-                case IDEA_LIST:
-                    out.writeObject(new ListIdeaResult(new RespondingCode(0),new HashSet<>(project.getIdeaSet())));
-                    break;
-
-                case PARTICIPANT_LIST:
-                    ListParticipant list = (ListParticipant) object;
-                    if (project.getIdeaSet().isEmpty()){
-                        out.writeObject(new ListParticipantResult(new RespondingCode(1),null));//Aucune idée
-                    }
-                    if (!project.getIdeaSet().contains(list.getIdea()))
-                        out.writeObject(new ListParticipantResult(new RespondingCode(2),null));//idées n'existe pas
-                    else
-                        out.writeObject(new ListParticipantResult(new RespondingCode(0),project.getStudentListOfAProject(list.getIdea())));
-                    break;
-
-                default:
-                    out.writeObject(new JoinIdeaResult(new RespondingCode(5)));
-                    break;
+            if (object instanceof Request)
+            {
+                Request request = (Request) object;
+                out.writeObject(builders[request.getType().ordinal()].build(request, project));
             }
 
             out.close();
