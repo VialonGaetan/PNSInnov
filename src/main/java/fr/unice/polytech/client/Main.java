@@ -1,6 +1,7 @@
 package fr.unice.polytech.client;
 
 import java.io.IOException;
+import java.rmi.server.RMIClassLoader;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -22,9 +23,12 @@ public class Main
 
     public static void main(String[] args) throws IOException
     {
+        if (args.length != 1)
+            throw new IllegalArgumentException();
+
         System.out.println(HELP);
         Scanner scanner = new Scanner(System.in);
-        Client client = new Client("10.212.127.229", 15555);
+        Client client = new Client(args[0], 15555);
 
         try
         {

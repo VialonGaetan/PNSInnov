@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
  * @author Alexandre Clement
  *         Created the 07/05/2017.
  */
-enum Argument
+public enum Argument
 {
     ADD_IDEA(Type.MATCH_IDEA),
     JOIN_IDEA(Type.MATCH_IDEA_AND_STUDENT),
@@ -29,12 +29,12 @@ enum Argument
         return type;
     }
 
-    Pattern getPattern()
+    public Pattern getPattern()
     {
         return pattern;
     }
 
-    String getDescription()
+    public String getDescription()
     {
         return description;
     }

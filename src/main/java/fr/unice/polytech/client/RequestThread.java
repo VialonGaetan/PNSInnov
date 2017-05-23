@@ -12,7 +12,7 @@ import java.util.logging.Logger;
  * @author Alexandre Clement
  *         Created the 07/05/2017.
  */
-class RequestThread implements Runnable
+public class RequestThread implements Runnable
 {
     private static final Logger LOGGER = Logger.getLogger(Client.class.getName());
     private final Request request;
@@ -20,7 +20,7 @@ class RequestThread implements Runnable
     private final ObjectInputStream in;
     private final ObjectOutputStream out;
 
-    RequestThread(Request request, Socket socket) throws IOException
+    public RequestThread(Request request, Socket socket) throws IOException
     {
         this.request = request;
         this.socket = socket;

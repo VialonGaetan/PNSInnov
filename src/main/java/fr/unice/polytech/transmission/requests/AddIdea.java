@@ -48,6 +48,7 @@ public class AddIdea implements Request
         return idea.equals(that.idea);
     }
 
+
     @Override
     public int hashCode()
     {
